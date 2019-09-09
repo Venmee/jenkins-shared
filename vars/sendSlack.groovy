@@ -25,9 +25,13 @@ def getBuildUser() {
         return currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
     }
 
+def author() {
+  sh(returnStdout: true, script: "git --no-pager show -s --format='%an'").trim()
+}
+
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER} by" + getBuildUser() "\n" + getChangeString()
+    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER} >> " + getBuildUser() "\n" + getChangeString() + "\nby: " author()
   }
   else if ( buildResult == "SUCCESS" ) {
     slackSend color: "good", message: "Successful Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
