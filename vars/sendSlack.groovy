@@ -31,10 +31,10 @@ def author() {
 
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "#80D2DE", message: "${env.JOB_NAME} » #${env.BUILD_NUMBER} Started (<${env.BUILD_URL}|Open>)\nBy: " + getBuildUser() + getChangeString() +  "\nAuthor: " + author()
+    slackSend color: "good", message: "${env.JOB_NAME} » #${env.BUILD_NUMBER} Started (<${env.BUILD_URL}|Open>) by " + getBuildUser() + "\nChanges:\n" + getChangeString()
   }
   else if ( buildResult == "SUCCESS" ) {
-    slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Success (<${env.BUILD_URL}|Open>)"
+    slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Success (<${env.BUILD_URL}|Open>)"
   }
   else if( buildResult == "FAILURE" ) {
     slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Failure (<${env.BUILD_URL}|Open>)"
