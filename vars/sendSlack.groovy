@@ -22,9 +22,11 @@ def getChangeString() {
 }
 
 def call(String buildResult) {
-  if ( buildResult == "SUCCESS" ) {
-    slackSend (color: 'good', message: "Changes:\n " + getChangeString() + "\n\n")
-    slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful\n\n" + getChangeString()
+  if ( buildResult == "STARTED" ) {
+    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful\n" + getChangeString() + "\nTriggered by: ${entry.author}"
+  }
+  else if ( buildResult == "SUCCESS" ) {
+    slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
   }
   else if( buildResult == "FAILURE" ) {
     slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
