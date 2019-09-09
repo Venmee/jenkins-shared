@@ -23,7 +23,7 @@ def call(String buildResult) {
       return changeString
 
       slackSend color: "good", message: "Changes:\n " + getChangeString() + "\n By: ${entry.author}"
-
+    }
   else if( buildResult == "FAILURE" ) {
     slackSend color: "danger", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was failed"
   }
