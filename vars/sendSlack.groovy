@@ -27,7 +27,7 @@ def getBuildUser() {
 
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} - ${env.BUILD_NUMBER} wiht below changes\n" + getChangeString() + "\nBy:" + getBuildUser()
+    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER} by" + getBuildUser() "\n" + getChangeString()
   }
   else if ( buildResult == "SUCCESS" ) {
     slackSend color: "good", message: "Job: ${env.JOB_NAME} with buildnumber ${env.BUILD_NUMBER} was successful"
