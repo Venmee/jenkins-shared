@@ -46,12 +46,10 @@ def call(String buildStatus) {
   }
   
   return changeString
-  def sendSlack(status) {
-    slackSend (color: '#80D2DE', message: "Changes:\n " + getChangeString() + "\n\n")
-  }
-  // def message = "${env.JOB_NAME} <${env.BUILD_URL}|#${env.BUILD_NUMBER}> ${statusMessage}"
-  //   // slackSend (color: '#80D2DE', message: "Changes:\n " + getChangeString() + "\n\n")
-  //   slackSend (color: color, message: message + "Changes:\n " + getChangeString() )
+
+  def message = "${env.JOB_NAME} <${env.BUILD_URL}|#${env.BUILD_NUMBER}> ${statusMessage}"
+    // slackSend (color: '#80D2DE', message: "Changes:\n " + getChangeString() + "\n\n")
+    slackSend (color: color, message: message + "Changes:\n " + getChangeString() )
 }
 
 
