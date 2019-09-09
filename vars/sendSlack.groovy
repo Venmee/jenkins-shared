@@ -31,7 +31,7 @@ def author() {
 
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER} >> " + getBuildUser() "\n" + getChangeString() + "\nby: " author()
+    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER} >> " + getBuildUser() + "\n" getChangeString() + "\nby: " author()
   }
   else if ( buildResult == "SUCCESS" ) {
     slackSend color: "good", message: "Successful Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
