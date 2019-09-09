@@ -31,18 +31,18 @@ def author() {
 
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "#80D2DE", message: "Started Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}\n" + getChangeString() + "\nBy: " + getBuildUser() + "\nAuthor: " + author()
+    slackSend color: "#80D2DE", message: "${env.JOB_NAME} » #${env.BUILD_NUMBER} Started (<${env.BUILD_URL}|Open>)\nBy: " + getBuildUser() + getChangeString() +  "\nAuthor: " + author()
   }
   else if ( buildResult == "SUCCESS" ) {
-    slackSend color: "good", message: "Successful Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
+    slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Success (<${env.BUILD_URL}|Open>)"
   }
   else if( buildResult == "FAILURE" ) {
-    slackSend color: "danger", message: "Failure Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
+    slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Failure (<${env.BUILD_URL}|Open>)"
   }
   else if( buildResult == "UNSTABLE" ) {
-    slackSend color: "warning", message: "Unstable Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
+    slackSend color: 'warning', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Unstable (<${env.BUILD_URL}|Open>)"
   }
   else {
-    slackSend color: "danger", message: "Unknown Job: ${env.JOB_NAME} >> ${env.BUILD_NUMBER}"
+    slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Unknown (<${env.BUILD_URL}|Open>)"
   }
 }
