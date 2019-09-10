@@ -34,27 +34,60 @@ def call(String buildResult) {
     slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
   }
 
-  //Dev Stage notification
+  //DEV Stage notification
   else if ( buildResult == "DEV_STARTED" ) {
-    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Started"
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|DEV Deployment> Started"
   }
   else if ( buildResult == "DEV_SUCCESS" ) {
-    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Success"
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|DEV Deployment> Success"
   }
   else if ( buildResult == "DEV_FAILURE" ) {
-    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Failed"
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|DEV Deployment> Failed"
+  }
+
+  //INT Stage notification
+  else if ( buildResult == "INT_STARTED" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|INT Deployment> Started"
+  }
+  else if ( buildResult == "INT_SUCCESS" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|INT Deployment> Success"
+  }
+  else if ( buildResult == "INT_FAILURE" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|INT Deployment> Failed"
+  }
+
+  //UAT Stage notification
+  else if ( buildResult == "UAT_STARTED" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|UAT Deployment> Started"
+  }
+  else if ( buildResult == "UAT_SUCCESS" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|UAT Deployment> Success"
+  }
+  else if ( buildResult == "UAT_FAILURE" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|UAT Deployment> Failed"
+  }
+
+  //PRD Stage notification
+  else if ( buildResult == "PRD_STARTED" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|PRD Deployment> Started"
+  }
+  else if ( buildResult == "PRD_SUCCESS" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|PRD Deployment> Success"
+  }
+  else if ( buildResult == "PRD_FAILURE" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|PRD Deployment> Failed"
   }
 
   else if ( buildResult == "SUCCESS" ) {
-    slackSend color: 'good', message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Success"
+    slackSend color: 'good', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Success"
   }
   else if( buildResult == "FAILURE" ) {
-    slackSend color: 'danger', message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Failure"
+    slackSend color: 'danger', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Failure"
   }
   else if( buildResult == "UNSTABLE" ) {
-    slackSend color: 'warning', message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Unstable"
+    slackSend color: 'warning', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Unstable"
   }
   else {
-    slackSend color: 'danger', message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Unknown"
+    slackSend color: 'danger', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Unknown"
   }
 }
