@@ -29,10 +29,6 @@ def author() {
   sh(returnStdout: true, script: "git --no-pager show -s --format='%an'").trim()
 }
 
-def call(String buildResult) {
-  if ( buildResult == "STARTED" ) {
-    slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
-  }
 
   def getAbortUser()
   {
@@ -52,6 +48,11 @@ def call(String buildResult) {
       actions = null
 
       return causee
+  }
+
+def call(String buildResult) {
+  if ( buildResult == "STARTED" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
   }
 
   //DEV Stage notification
