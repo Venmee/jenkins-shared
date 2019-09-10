@@ -31,8 +31,20 @@ def author() {
 
 def call(String buildResult) {
   if ( buildResult == "STARTED" ) {
-    slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started (<${env.BUILD_URL}|Open>) by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
+    slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
   }
+
+  //Dev Stage notification
+  else if ( buildResult == "DEV_STARTED" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Started"
+  }
+  else if ( buildResult == "DEV_SUCCESS" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Success"
+  }
+  else if ( buildResult == "DEV_FAILURE" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage:<${env.RUN_DISPLAY_URL}|DEV Deployment> Failed"
+  }
+
   else if ( buildResult == "SUCCESS" ) {
     slackSend color: 'good', message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Success"
   }
