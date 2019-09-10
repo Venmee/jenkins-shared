@@ -34,6 +34,26 @@ def call(String buildResult) {
     slackSend color: "good", message: "${env.JOB_NAME} - Build:<${env.BUILD_URL}|#${env.BUILD_NUMBER}> Started by " + getBuildUser() + "\nChanges:\n" + "\t" + getChangeString()
   }
 
+  def getAbortUser()
+  {
+      def causee = ''
+      def actions = currentBuild.getRawBuild().getActions(jenkins.model.InterruptedBuildAction)
+      for (action in actions) {
+          def causes = action.getCauses()
+
+          // on cancellation, report who cancelled the build
+          for (cause in causes) {
+              causee = cause.getUser().getDisplayName()
+              cause = null
+          }
+          causes = null
+          action = null
+      }
+      actions = null
+
+      return causee
+  }
+
   //DEV Stage notification
   else if ( buildResult == "DEV_STARTED" ) {
     slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|DEV Deployment> Started"
@@ -78,11 +98,22 @@ def call(String buildResult) {
     slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|PRD Deployment> Failed"
   }
 
+  //PRD Stage notification
+  else if ( buildResult == "E2E_SUCCESS" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|E2E Tesing> Success"
+  }
+  else if ( buildResult == "E2E_FAILURE" ) {
+    slackSend color: "good", message: "${env.JOB_NAME} - Stage: <${env.RUN_DISPLAY_URL}|E2E Tesing> Failed"
+  }
+
   else if ( buildResult == "SUCCESS" ) {
     slackSend color: 'good', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Success"
   }
   else if( buildResult == "FAILURE" ) {
     slackSend color: 'danger', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Failure"
+  }
+  else if( buildResult == "ABORTED" ) {
+    slackSend color: 'warning', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Aborted by " + getAbortUser()
   }
   else if( buildResult == "UNSTABLE" ) {
     slackSend color: 'warning', message: "${env.JOB_NAME} - Build: <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Unstable"
