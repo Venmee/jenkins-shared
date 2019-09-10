@@ -34,7 +34,7 @@ def call(String buildResult) {
     slackSend color: "good", message: "${env.JOB_NAME} » #${env.BUILD_NUMBER} Started (<${env.BUILD_URL}|Open>) by " + getBuildUser() + "\nChanges:\n" + getChangeString()
   }
   else if ( buildResult == "SUCCESS" ) {
-    slackSend color: 'good', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Success (<${env.BUILD_URL}|Open>)"
+    slackSend color: 'good', message: "${env.JOB_NAME} - <${env.BUILD_URL}|#${env.BUILD_NUMBER}> Success (<${env.BUILD_URL}|Open>)"
   }
   else if( buildResult == "FAILURE" ) {
     slackSend color: 'danger', message: "${env.JOB_NAME} - #${env.BUILD_NUMBER} Failure (<${env.BUILD_URL}|Open>)"
